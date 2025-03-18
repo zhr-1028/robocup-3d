@@ -217,18 +217,6 @@ protected:
    
     SkillType demoKickingCircle();// 示例行为：球员形成旋转圆圈并踢球***********************************************************************************
    
-    // SkillType goalieBehavior();
-    // SkillType activePlayBehavior();
-    // SkillType offensiveAttackerBehavior();
-    // SkillType dynamicPositioning();
-    // SkillType navigateWithCollisionAvoidance(VecPosition target);
-    // VecPosition calculateOptimalDefensePosition();
-    // int countDefendersInPenaltyArea();
-    // bool canActivatePassMode();
-    // bool checkBallHoldingViolation();
-    // SkillType handlePenaltyMode() ;
-    // SkillType releaseBall() ;
-    // SkillType defaultPositioning();
 
 
 

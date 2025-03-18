@@ -1,0 +1,292 @@
+### 为所有代理加载的默认参数 ###
+
+##########################
+### UT 行走参数 ###
+##########################
+
+##<-- 前往目标的行走参数 -->##
+// 步长在弧度和毫米上的最大尺寸
+utwalk_max_step_size_angle	1.22
+utwalk_max_step_size_x	50
+utwalk_max_step_size_y	40
+// 行走过程中质心左右偏移的量（毫米）
+utwalk_shift_amount	20
+// 躯干离地面的高度（毫米）
+utwalk_walk_height	175
+// 步幅中脚离地面的最大高度（毫米）
+utwalk_step_height	20
+// 摆动脚在 XY 平面移动前静止的阶段占比
+utwalk_fraction_still	0.2
+// 摆动脚在离地前与地面接触的阶段占比
+utwalk_fraction_on_ground	0.2
+// 摆动脚在 XY 平面移动的阶段占比
+utwalk_fraction_moving	0.6
+// 摆动脚在空中的阶段占比
+utwalk_fraction_in_air	0.6
+// 单步的持续时间（秒）
+utwalk_phase_length	0.38
+// 指令质心和感知质心之间的预期差值
+utwalk_default_com_pos_x	0.0
+// 每个时间周期步长变化的速度因子（比例控制器）
+utwalk_pid_step_size_x	0.03
+utwalk_pid_step_size_y	0.03
+utwalk_pid_step_size_rot	0.03
+// 步长减慢前质心的最大正常误差（毫米）
+utwalk_max_normal_com_error	7.5
+// 所有速度降为 0 前质心的最大可接受误差（毫米）
+utwalk_max_acceptable_com_error	12.5
+// 躯干和脚之间的恒定偏移量（毫米）
+utwalk_fwd_offset	2.5
+// 应用于躯干向前位置的步长因子
+utwalk_fwd_offset_factor	0.5
+// 脚落地时的角度（弧度）
+utwalk_swing_ankle_offset	-0.087266463
+// 由惯性测量单元（IMU）测量得到的躯干角度的比例控制器值
+utwalk_pid_tilt	0.15
+utwalk_pid_roll	0.2
+// 控制质心的比例控制器值
+utwalk_pid_com_x	1.0
+utwalk_pid_com_y	1.0
+utwalk_pid_com_z	0.0
+// 移动手臂以控制质心的比例控制器值
+utwalk_pid_arm_x	0.0
+utwalk_pid_arm_y	0.0
+
+#-- 行走平衡控制的默认参数 --#
+// 身体倾斜和滚动的关节角度校正因子
+utwalk_balance_hip_pitch	0
+utwalk_balance_knee_pitch	0
+utwalk_balance_hip_roll		0
+utwalk_balance_ankle_roll	0
+
+#-- 脚趾模型的默认参数 --#
+// 脚趾和脚踝俯仰的正弦运动参数
+utwalk_toe_const_offset	  0
+utwalk_toe_amplitude	  0
+utwalk_toe_phase_offset	  0
+utwalk_ankle_const_offset	0
+utwalk_ankle_amplitude	  0
+utwalk_ankle_phase_offset	0
+
+##<-- 定位/盘带的行走参数 -->##
+pos_utwalk_max_step_size_angle	1.22
+pos_utwalk_max_step_size_x	50
+pos_utwalk_max_step_size_y	40
+pos_utwalk_shift_amount	20
+pos_utwalk_walk_height	175
+pos_utwalk_step_height	20
+pos_utwalk_fraction_still	0.2
+pos_utwalk_fraction_on_ground	0.2
+pos_utwalk_fraction_moving	0.6
+pos_utwalk_fraction_in_air	0.6
+pos_utwalk_phase_length	0.38
+pos_utwalk_default_com_pos_x	0.0
+pos_utwalk_pid_step_size_x	0.03
+pos_utwalk_pid_step_size_y	0.03
+pos_utwalk_pid_step_size_rot	0.03
+pos_utwalk_max_normal_com_error	7.5
+pos_utwalk_max_acceptable_com_error	12.5
+pos_utwalk_fwd_offset	2.5
+pos_utwalk_fwd_offset_factor	0.5
+pos_utwalk_swing_ankle_offset	-0.087266463
+pos_utwalk_pid_tilt	0.15
+pos_utwalk_pid_roll	0.2
+pos_utwalk_pid_com_x	1.0
+pos_utwalk_pid_com_y	1.0
+pos_utwalk_pid_com_z	0.0
+pos_utwalk_pid_arm_x	0.0
+pos_utwalk_pid_arm_y	0.0
+pos_utwalk_balance_hip_pitch	0
+pos_utwalk_balance_knee_pitch	0
+pos_utwalk_balance_hip_roll		0
+pos_utwalk_balance_ankle_roll	0
+pos_utwalk_toe_const_offset	  0
+pos_utwalk_toe_amplitude	  0
+pos_utwalk_toe_phase_offset	  0
+pos_utwalk_ankle_const_offset	0
+pos_utwalk_ankle_amplitude	  0
+pos_utwalk_ankle_phase_offset	0
+
+##<-- 接近球准备踢球的行走参数 -->##
+app_utwalk_max_step_size_angle	1.22
+app_utwalk_max_step_size_x	50
+app_utwalk_max_step_size_y	40
+app_utwalk_shift_amount	20
+app_utwalk_walk_height	175
+app_utwalk_step_height	20
+app_utwalk_fraction_still	0.2
+app_utwalk_fraction_on_ground	0.2
+app_utwalk_fraction_moving	0.6
+app_utwalk_fraction_in_air	0.6
+app_utwalk_phase_length	0.38
+app_utwalk_default_com_pos_x	0.0
+app_utwalk_pid_step_size_x	0.03
+app_utwalk_pid_step_size_y	0.03
+app_utwalk_pid_step_size_rot	0.03
+app_utwalk_max_normal_com_error	7.5
+app_utwalk_max_acceptable_com_error	12.5
+app_utwalk_fwd_offset	2.5
+app_utwalk_fwd_offset_factor	0.5
+app_utwalk_swing_ankle_offset	-0.087266463
+app_utwalk_pid_tilt	0.15
+app_utwalk_pid_roll	0.2
+app_utwalk_pid_com_x	1.0
+app_utwalk_pid_com_y	1.0
+app_utwalk_pid_com_z	0.0
+app_utwalk_pid_arm_x	0.0
+app_utwalk_pid_arm_y	0.0
+app_utwalk_balance_hip_pitch	0
+app_utwalk_balance_knee_pitch	0
+app_utwalk_balance_hip_roll		0
+app_utwalk_balance_ankle_roll	0
+app_utwalk_toe_const_offset	  0
+app_utwalk_toe_amplitude	  0
+app_utwalk_toe_phase_offset	  0
+app_utwalk_ankle_const_offset	0
+app_utwalk_ankle_amplitude	  0
+app_utwalk_ankle_phase_offset	0
+
+
+########################
+### 起身参数 ###
+########################
+
+# 从前面倒地起身的默认参数
+getup_parms_stateDownInitialWait	0.5
+getup_parms_stateDown3A1	30.0
+getup_parms_stateDown3L3	110.0
+getup_parms_stateDown3MinTime	0.04
+getup_parms_stateDown5L1	-45.0
+getup_parms_stateDown5MinTime	0.9
+getup_parms_stateDown7L1	-25.0
+getup_parms_stateDown7L3	60.0
+getup_parms_stateDown7MinTime	0.3
+getup_parms_stateDown10MinTime	0.8
+
+# 从后面倒地起身的默认参数
+getup_parms_stateUpInitialWait	0.5
+getup_parms_stateUp3A1	-120.0
+getup_parms_stateUp3A2	35.0
+getup_parms_stateUp3A4	60.0
+getup_parms_stateUp3L3	15.0
+getup_parms_stateUp3MinTime	0.2
+getup_parms_stateUp5L3	110.0
+getup_parms_stateUp5MinTime	0.04
+getup_parms_stateUp7L1	-35.0
+getup_parms_stateUp7MinTime	0.2
+getup_parms_stateUp9A1	30.0
+getup_parms_stateUp9L1	-80.0
+getup_parms_stateUp9L4	-60.0
+getup_parms_stateUp9L5	-70.0
+getup_parms_stateUp9L6	-40.0
+getup_parms_stateUp9MinTime	0.2
+getup_parms_stateUp11A1	30.0
+getup_parms_stateUp11L1	-60.0 
+getup_parms_stateUp11L5	-80.0
+getup_parms_stateUp11MinTime	0.4
+getup_parms_stateUp13A1	-90.0
+getup_parms_stateUp13L1	-30.0
+getup_parms_stateUp13L3	30.0
+getup_parms_stateUp13L4	-10.0 
+getup_parms_stateUp13L5	-10.0
+getup_parms_stateUp13MinTime	0.04 
+getup_parms_stateUp15MinTime	0.6
+
+
+#######################
+### 踢球参数 ###
+#######################
+
+kick_p1	-19.557993714343954
+kick_p2	-116.33168663169225
+kick_p3	-46.494524238808935
+kick_p4	114.34191464255687
+kick_p5	8.009471678103255
+kick_p6	76.4847755838874
+kick_p7	-31.637611686590287
+kick_p8	24.56402804393056
+kick_p9	22.447324354397427
+kick_p11	12.412258757088757
+kick_p12	2.9108536812695958
+kick_p13	-4.139927460294173
+kick_p14	2.5793464431419877
+kick_xoffset	-0.18758631052473101
+kick_yoffset	-0.08133614974057074
+kick_scale1	5.295086273579072
+kick_scale2	1.9096575829831766
+kick_scale3	0.7896144070184505
+
+kick_max_displacement_right	0.01
+kick_max_displacement_left	0.01
+kick_max_displacement_top	0.01
+kick_max_displacement_bottom	0.01
+kick_cw_angle_thresh	2
+kick_ccw_angle_thresh	2
+kick_angle		0
+
+
+##########################
+### 逆运动学（IK）踢球参数 ###
+##########################
+
+kick_ik_0_xoffset	-0.18184725746865413
+kick_ik_0_yoffset	-0.007990019340567048
+kick_ik_0_x0			0.09855534262963274
+kick_ik_0_y0			0.04897226608420107
+kick_ik_0_z0			0.06004895070570849
+kick_ik_0_x1			-0.13267256199213984
+kick_ik_0_y1			0.15055665409986765
+kick_ik_0_z1			0.3048635084962904
+kick_ik_0_x2			-0.075918848350498
+kick_ik_0_y2			0.010843367764323163
+kick_ik_0_z2			-0.03228058151402973
+kick_ik_0_x3			0.3514121512894722
+kick_ik_0_y3			-0.0915098467211551
+kick_ik_0_z3			0.2932735025335922
+kick_ik_0_a0			-2.0713675817098482
+kick_ik_0_b0			4.168030311789961
+kick_ik_0_c0			-0.17712625804502546
+kick_ik_0_a1			-2.3258316746549554
+kick_ik_0_b1			9.39335694003392
+kick_ik_0_c1			-5.4878969788579175
+kick_ik_0_a2			2.254184572289742
+kick_ik_0_b2			0.014404161833793745
+kick_ik_0_c2			-16.34929405684522
+kick_ik_0_a3			-0.1703513663364682
+kick_ik_0_b3			77.12670393386878
+kick_ik_0_c3			-21.212384580007893
+kick_ik_0_wait			0.06679452466769868
+kick_ik_0_scale			2.434596016520202
+kick_ik_0_off3_0		6.8002354818317885
+kick_ik_0_off4_0		23.957167469656504
+kick_ik_0_off5_0		-7.433399813693172
+kick_ik_0_off3_1		-16.624470935986754
+kick_ik_0_off4_1		20.351676522363075
+kick_ik_0_off5_1		-25.63678390762887
+kick_ik_0_off3_2		-50.00201321637502
+kick_ik_0_off4_2		-39.33897746613399
+kick_ik_0_off5_2		54.047464010320134
+
+kick_ik_0_max_displacement_right	0.025
+kick_ik_0_max_displacement_left	0.025
+kick_ik_0_max_displacement_top	0.025
+kick_ik_0_max_displacement_bottom	0.025
+kick_ik_0_cw_angle_thresh	2
+kick_ik_0_ccw_angle_thresh	2
+kick_ik_0_angle			0
+
+
+// 接近球的参数
+kick_gen_approach_turnDist	0.25 
+kick_gen_approach_buff		0.05
+kick_gen_approach_estVelCorrection	0.05
+kick_gen_approach_navBallDist		0.5
+kick_gen_approach_navBallCollision	0.25
+kick_gen_approach_navBallAngle		40
+kick_gen_approach_maxDecelX		0.5
+kick_gen_approach_maxDecelY		0.5
+
+
+// 盘带参数
+drib_coll_thresh				0.34
+drib_target					0.18

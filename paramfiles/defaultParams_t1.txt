@@ -1,0 +1,185 @@
+
+
+########################
+###起床参数   ####
+########################
+
+前向起床参数 - 优化避免自碰撞
+getup_parms_stateDownInitialWait 0.5   # 起床前初始等待时间（秒）
+getup_parms_stateDown3A1 16.568148350107915  # 状态3A1关节角度参数
+getup_parms_stateDown3L3 113.41133450590875 # 状态3L3关节角度参数
+getup_parms_stateDown3MinTime 0.04 # 状态3最小持续时间（秒）
+getup_parms_stateDown5L1 -39.17965858391402 # 状态5L1关节角度参数
+getup_parms_stateDown5MinTime 0.9 # 状态5最小持续时间（秒）
+getup_parms_stateDown7L1 -8.232686646848567 # 状态7L1关节角度参数
+getup_parms_stateDown7L3 62.10471861129633 # 状态7L3关节角度参数
+getup_parms_stateDown7MinTime 0.3 # 状态7最小持续时间（秒）
+getup_parms_stateDown10MinTime 0.8 # 状态10最小持续时间（秒）
+
+后向起床参数 - 优化避免自碰撞
+getup_parms_stateUpInitialWait 0.5 # 起床后初始等待时间（秒）
+getup_parms_stateUp3A1 -165.16130968225886 # 状态3A1关节角度参数
+getup_parms_stateUp3A2 42.58511262180544 # 状态3A2关节角度参数
+getup_parms_stateUp3A4 117.07281960213916 # 状态3A4关节角度参数
+getup_parms_stateUp3L3 55.45054826070052 # 状态3L3关节角度参数
+getup_parms_stateUp3MinTime 0.2 # 状态3最小持续时间（秒）
+getup_parms_stateUp5L3 115.49895139205304 # 状态5L3关节角度参数
+getup_parms_stateUp5MinTime 0.04 # 状态5最小持续时间（秒）
+getup_parms_stateUp7L1 -68.1166661743677 # 状态7L1关节角度参数
+getup_parms_stateUp7MinTime 0.2 # 状态7最小持续时间（秒）
+getup_parms_stateUp9A1 46.81694893244553 # 状态9A1关节角度参数
+getup_parms_stateUp9L1 -122.97859206412672 # 状态9L1关节角度参数
+getup_parms_stateUp9L4 -37.42441472881181 # 状态9L4关节角度参数
+getup_parms_stateUp9L5 -69.18081712780187 # 状态9L5关节角度参数
+getup_parms_stateUp9L6 -86.80191982495745 # 状态9L6关节角度参数
+getup_parms_stateUp9MinTime 0.2 # 状态9最小持续时间（秒）
+getup_parms_stateUp11A1 42.78745493987175 # 状态11A1关节角度参数
+getup_parms_stateUp11L1 -63.476728163679795 # 状态11L1关节角度参数
+getup_parms_stateUp11L5 -92.55995382987949 # 状态11L5关节角度参数
+getup_parms_stateUp11MinTime 0.4 # 状态11最小持续时间（秒）
+getup_parms_stateUp13A1 -50.62380061268099 # 状态13A1关节角度参数
+getup_parms_stateUp13L1 -27.678137746769536 # 状态13L1关节角度参数
+getup_parms_stateUp13L3 18.485095263513564 # 状态13L3关节角度参数
+getup_parms_stateUp13L4 14.273184019175599 # 状态13L4关节角度参数
+getup_parms_stateUp13L5 -58.9003662416826 # 状态13L5关节角度参数
+getup_parms_stateUp13MinTime 0.04 # 状态13最小持续时间（秒）
+getup_parms_stateUp15MinTime 0.6 # 状态15最小持续时间（秒）
+
+#######################
+
+踢球参数
+#######################
+
+kick_p1 -21.878452192908963 # 踢球力度/角度参数1
+kick_p2 -107.2655684773586 # 踢球力度/角度参数2
+kick_p3 -46.03084224893723 # 踢球力度/角度参数3
+kick_p4 122.50096005151583 # 踢球力度/角度参数4
+kick_p5 36.70802042526406 # 踢球力度/角度参数5
+kick_p6 74.34964372370875 # 踢球力度/角度参数6
+kick_p7 -23.35326324263892 # 踢球力度/角度参数7
+kick_p8 -1.411851711850464 # 踢球力度/角度参数8
+kick_p9 4.8436144712052585 # 踢球力度/角度参数9
+kick_p11 -12.878536016473056 # 踢球力度/角度参数11
+kick_p12 8.73474032972045 # 踢球力度/角度参数12
+kick_p13 -2.0087222938685585 # 踢球力度/角度参数13
+kick_p14 2.4649510821897755 # 踢球力度/角度参数14
+kick_xoffset -0.19721363030046984 # X轴踢球偏移量（米）
+kick_yoffset -0.07855676227334851 # Y轴踢球偏移量（米）
+kick_scale1 7.790202814460635 # 力度缩放因子1
+kick_scale2 5.980745105156915 # 力度缩放因子2
+kick_scale3 0.60539945683587 # 力度缩放因子3
+
+#################################
+#########优化行走参数######
+#################################
+
+##<-- 朝向目标行走参数 -->##
+/*
+这些参数基于UT Austin Villa团队在2012年AAAI会议上发表的论文优化：
+《Design and Optimization of an Omnidirectional Humanoid Walk...》
+*/
+utwalk_max_step_size_angle 0.8024586090513253 # 最大步长角度阈值（弧度）
+utwalk_max_step_size_x 108.7556110915902 # X轴最大步长（厘米）
+utwalk_max_step_size_y 74.4935510327151 # Y轴最大步长（厘米）
+utwalk_shift_amount -18.294447081916328 # 横向移动补偿量（厘米）
+utwalk_walk_height 149.02400810686044 # 行走时身体高度（厘米）
+utwalk_step_height 77.51792538836638 # 步幅垂直高度（厘米）
+utwalk_fraction_still 0.3434245549175683 # 静止状态占比（0-1）
+utwalk_fraction_on_ground -0.05778051267537769 # 地面接触比例（优化参数）
+utwalk_phase_length 0.06196439965990527 # 动作周期时长（秒）
+utwalk_default_com_pos_x -49.92404794567735 # 默认质心X坐标（厘米）
+utwalk_pid_step_size_x 0.02913534549352995 # X轴PID步长调整量
+utwalk_pid_step_size_y 0.040069251483028374 # Y轴PID步长调整量
+utwalk_pid_step_size_rot 0.08311984252228707 # 旋转PID步长调整量
+utwalk_max_normal_com_error 14.173965772864628 # 正常质心误差上限（厘米）
+utwalk_max_acceptable_com_error 99.70250710214097 # 可接受质心误差上限（厘米）
+utwalk_fwd_offset 1.620534424237782 # 前进方向偏移量（厘米）
+utwalk_fwd_offset_factor 0.8878126276949263 # 前进偏移系数
+utwalk_fraction_moving 0.7066620087173812 # 移动状态占比（0-1）
+utwalk_fraction_in_air 1.2265865010025827 # 空中状态占比（优化参数）
+utwalk_swing_ankle_offset -0.1276370985800854 # 摆动脚踝偏移量（弧度）
+utwalk_pid_tilt 0.23481727883696232 # 倾斜PID增益
+utwalk_pid_roll -0.13254176315494343 # 滚动PID增益
+utwalk_pid_com_x 1.2839211224476685 # 质心X轴PID增益
+utwalk_pid_com_y 0.710246393252769 # 质心Y轴PID增益
+utwalk_pid_com_z 0.09199521532665715 # 质心Z轴PID增益
+utwalk_pid_arm_x -0.28009850961801286 # 手臂X轴PID增益
+utwalk_pid_arm_y -0.15921680247098174 # 手臂Y轴PID增益
+
+##<-- 定位/盘带行走参数 -->##
+/* 参数设置与"朝向目标行走"相同，采用同一套运动控制策略 */
+
+pos_utwalk_max_step_size_angle 0.8024586090513253 # （同上）
+pos_utwalk_max_step_size_x 108.7556110915902 # （同上）
+pos_utwalk_max_step_size_y 74.4935510327151 # （同上）
+pos_utwalk_shift_amount -18.294447081916328 # （同上）
+pos_utwalk_walk_height 149.02400810686044 # （同上）
+pos_utwalk_step_height 77.51792538836638 # （同上）
+pos_utwalk_fraction_still 0.3434245549175683 # （同上）
+pos_utwalk_fraction_on_ground -0.05778051267537769 # （同上）
+pos_utwalk_phase_length 0.06196439965990527 # （同上）
+pos_utwalk_default_com_pos_x -49.92404794567735 # （同上）
+pos_utwalk_pid_step_size_x 0.02913534549352995 # （同上）
+pos_utwalk_pid_step_size_y 0.040069251483028374 # （同上）
+pos_utwalk_pid_step_size_rot 0.08311984252228707 # （同上）
+pos_utwalk_max_normal_com_error 14.173965772864628 # （同上）
+pos_utwalk_max_acceptable_com_error 99.70250710214097 # （同上）
+pos_utwalk_fwd_offset 1.620534424237782 # （同上）
+pos_utwalk_fwd_offset_factor 0.8878126276949263 # （同上）
+pos_utwalk_fraction_moving 0.7066620087173812 # （同上）
+pos_utwalk_fraction_in_air 1.2265865010025827 # （同上）
+pos_utwalk_swing_ankle_offset -0.1276370985800854 # （同上）
+pos_utwalk_pid_tilt 0.23481727883696232 # （同上）
+pos_utwalk_pid_roll -0.13254176315494343 # （同上）
+pos_utwalk_pid_com_x 1.2839211224476685 # （同上）
+pos_utwalk_pid_com_y 0.710246393252769 # （同上）
+pos_utwalk_pid_com_z 0.09199521532665715 # （同上）
+pos_utwalk_pid_arm_x -0.28009850961801286 # （同上）
+pos_utwalk_pid_arm_y -0.15921680247098174 # （同上）
+
+##<-- 接近球踢球行走参数 -->##
+/*
+基于UT Austin Villa团队在2015年RoboCup论文优化的参数：
+《UT Austin Villa: RoboCup 2014 3D Simulation League...》
+*/
+app_utwalk_max_step_size_angle 1.9381533235593797 # 接近球时最大步长角度（弧度）
+app_utwalk_max_step_size_x 71.63582250349182 # X轴最大步长（厘米）
+app_utwalk_max_step_size_y 144.900163304773 # Y轴最大步长（厘米）
+app_utwalk_shift_amount -21.907349427837936 # 加大横向补偿量（厘米）
+app_utwalk_walk_height 124.01200316628147 # 降低身体高度（厘米）
+app_utwalk_step_height 73.61066724376514 # 调整步幅高度（厘米）
+app_utwalk_fraction_still 0.29939200115833986 # 增加静止时间占比
+app_utwalk_fraction_on_ground -0.18387526959605313 # 调整地面接触比例
+app_utwalk_phase_length 0.06807206697299917 # 缩短动作周期（秒）
+app_utwalk_default_com_pos_x -0.4084305647968729 # 调整质心初始位置
+app_utwalk_pid_step_size_x 0.13707529143391334 # 增大X轴PID调整量
+app_utwalk_pid_step_size_y 0.046927757158147856 # 调整Y轴PID调整量
+app_utwalk_pid_step_size_rot 0.12279629485746335 # 增大旋转PID调整量
+app_utwalk_max_normal_com_error 46.11273420905612 # 放宽质心误差限制
+app_utwalk_max_acceptable_com_error 77.74540513509403 # 进一步放宽容错
+app_utwalk_fwd_offset 0.13176552428735822 # 减小前进偏移量
+app_utwalk_fwd_offset_factor 0.9684198651409902 # 调整偏移系数
+app_utwalk_fraction_moving 0.6237845064716534 # 平衡移动与静止比例
+app_utwalk_fraction_in_air 1.317851312205039 # 允许更长空中时间
+app_utwalk_swing_ankle_offset -0.33789073267058567 # 增大脚踝偏移量
+app_utwalk_pid_tilt 0.3581152193771387 # 调整倾斜PID增益
+app_utwalk_pid_roll -0.23108588849633932 # 调整滚动PID增益
+app_utwalk_pid_com_x 1.2931738443483614 # 优化质心X轴控制
+app_utwalk_pid_com_y 0.48451991950515516 # 优化质心Y轴控制
+app_utwalk_pid_com_z 0.19893585988034976 # 优化质心Z轴控制
+app_utwalk_pid_arm_x -0.4310964222520728 # 调整手臂X轴控制
+app_utwalk_pid_arm_y -0.5753525616637605 # 调整手臂Y轴控制
+
+// 接近球参数
+kick_gen_approach_turnDist 0.22650837898147766 # 转向接近距离（米）
+kick_gen_approach_buff 0.3335386081348905 # 安全缓冲距离（米）
+kick_gen_approach_estVelCorrection -0.05248222665309938 # 速度估计修正系数
+kick_gen_approach_navBallDist 0.5 # 导航球距离阈值（米）
+kick_gen_approach_navBallCollision 0.333 # 球体碰撞容差（米）
+kick_gen_approach_navBallAngle 20.0 # 导航球角度阈值（度）
+kick_gen_approach_maxDecelX 0.7930036316433737 # X轴最大减速度（m/s²）
+kick_gen_approach_maxDecelY 0.3368459512499765 # Y轴最大减速度（m/s²）
+
+// 盘带参数
+drib_coll_thresh 0.33582030312352373 # 碰撞检测阈值（米）
+drib_target 0.17785682250297227 # 盘带目标距离（米）

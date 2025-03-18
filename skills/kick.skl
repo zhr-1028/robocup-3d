@@ -1,0 +1,155 @@
+# 时间单位为秒。
+# 角度单位为度。
+
+# 开始执行技能：用左腿踢球
+STARTSKILL SKILL_KICK_LEFT_LEG
+
+# 状态 0
+STARTSTATE
+# 设置目标角度：左下肢关节 1 到 6 和右下肢关节 1 到 6 的目标角度
+settar EFF_LL1 0 EFF_LL2 0 EFF_LL3 18.0 EFF_LL4 -30.0 EFF_LL5 18.0 EFF_LL6 0 end
+settar EFF_RL1 0 EFF_RL2 0 EFF_RL3 18.0 EFF_RL4 -30.0 EFF_RL5 18.0 EFF_RL6 0 end
+# 等待 0.3 秒
+wait 0.3 end
+ENDSTATE
+
+# 状态 1 
+STARTSTATE
+# 设置目标角度：左下肢关节 2 和 6 以及右下肢关节 2 和 6 的目标角度
+settar EFF_LL2 -5 EFF_LL6 5 EFF_RL2 -5 EFF_RL6 5 end
+# 等待 0.1 秒
+wait 0.1 end
+ENDSTATE
+
+# 状态 2 
+STARTSTATE
+# 设置目标角度：左下肢关节 2 和 6 以及右下肢关节 2 和 6 的目标角度
+settar EFF_LL2 -10 EFF_LL6 10 EFF_RL2 -10 EFF_RL6 10 end
+# 等待 0.1 秒
+wait 0.1 end
+ENDSTATE
+
+# 状态 3 
+STARTSTATE
+# 增加目标角度：右下肢关节 3 增加 10 度，关节 4 减少 10 度
+inctar EFF_RL3 10 EFF_RL4 -10 end
+# 等待 0.1 秒
+wait 0.1 end
+ENDSTATE
+
+# 状态 4 
+STARTSTATE
+# 增加目标角度：右下肢关节 4 增加 10 度，关节 5 减少 10 度
+inctar EFF_RL4 10 EFF_RL5 -10 end
+# 设置目标角度：右下肢关节 1 为 -5.0 度
+settar EFF_RL1 -5.0 end
+# 等待 0.1 秒
+wait 0.1 end
+ENDSTATE
+
+# 状态 5 
+STARTSTATE
+# 增加目标角度：左下肢关节 4 减少 5 度，关节 5 增加 5 度
+inctar EFF_LL4 -5 EFF_LL5 5 end
+# 等待 0.06 秒
+wait 0.06 end
+ENDSTATE
+
+# 状态 6 
+STARTSTATE
+# 设置目标角度：左下肢关节 2 和 6 以及右下肢关节 2 和 6 的目标角度
+settar EFF_LL2 -6 EFF_LL6 6 EFF_RL2 -6 EFF_RL6 6 end
+# 等待 0.06 秒
+wait 0.06 end
+ENDSTATE
+
+# 状态 7 
+STARTSTATE
+# 设置目标角度：左下肢关节 2 和 6 以及右下肢关节 2 和 6 的目标角度为 0
+settar EFF_LL2 0 EFF_LL6 0 EFF_RL2 0 EFF_RL6 0 end
+# 等待 0.06 秒
+wait 0.06 end
+ENDSTATE
+
+# 状态 8 
+STARTSTATE
+# 设置目标角度：左下肢关节 2 和 6 以及右下肢关节 2 和 6 的目标角度
+settar EFF_LL2 6 EFF_LL6 -6 EFF_RL2 6 EFF_RL6 -6 end
+# 等待 0.06 秒
+wait 0.06 end
+ENDSTATE
+
+# 状态 9 
+STARTSTATE
+# 设置目标角度：左下肢关节 2 和 6 以及右下肢关节 2 和 6 的目标角度，结合踢球参数
+settar EFF_LL2 ( 12 + $kick_p13 ) EFF_LL6 ( -12 + $kick_p14 ) end
+settar EFF_RL2 ( 12 + $kick_p13 ) EFF_RL6 ( -12 + $kick_p14 ) end
+# 等待 0.4 秒
+wait 0.4 end
+ENDSTATE
+
+# 状态 10 
+STARTSTATE
+# 增加目标角度：左下肢关节 3 减少 10 度，关节 4 增加 10 度；右下肢同理
+inctar EFF_LL3 -10 EFF_LL4 10 EFF_RL3 -10 EFF_RL4 10 end
+# 等待 0.2 秒
+wait 0.2 end
+ENDSTATE
+
+# 状态 11 
+STARTSTATE
+# 增加目标角度：左下肢关节 3 减少 10 度，关节 4 增加 10 度；右下肢同理
+inctar EFF_LL3 -10 EFF_LL4 10 EFF_RL3 -10 EFF_RL4 10 end
+# 等待 0.2 秒
+wait 0.2 end
+ENDSTATE
+
+# 状态 13 
+STARTSTATE
+# 增加目标角度：左下肢关节 3 增加 20 度，关节 4 减少 60 度，关节 5 增加 20 度
+inctar EFF_LL3 20 EFF_LL4 -60 EFF_LL5 20 end
+# 等待 0.2 秒
+wait 0.2 end
+ENDSTATE
+
+# 状态 14 
+STARTSTATE
+# 设置目标角度：左下肢关节 3、4、5 的目标角度，结合踢球参数
+settar EFF_LL3 ( 50 + $kick_p1 ) EFF_LL4 ( -95 + $kick_p2 ) EFF_LL5 ( -15 + $kick_p3 ) end
+# 等待 0.5 秒
+wait 0.5 end
+ENDSTATE
+
+# 状态 15 
+STARTSTATE
+# 设置缩放比例：左下肢关节 3、4、5 的缩放比例，结合踢球缩放参数
+setscale EFF_LL3 ( 3 + $kick_scale1 ) EFF_LL4 ( 3 + $kick_scale2 ) EFF_LL5 ( 3 + $kick_scale3 ) end
+# 设置目标角度：左下肢关节 3、4、5 的目标角度，结合踢球参数
+settar EFF_LL3 ( 90 + $kick_p4 ) EFF_LL4 ( 0 + $kick_p5 ) EFF_LL5 ( -15 + $kick_p6 ) end
+# 等待 0.5 秒
+wait 0.5 end
+ENDSTATE
+
+# 状态 16 
+STARTSTATE
+# 设置缩放比例：左下肢关节 3、4、5 的缩放比例为 1
+setscale EFF_LL3 1 EFF_LL4 1 EFF_LL5 1 end
+# 设置目标角度：左下肢关节 3、4、5 的目标角度
+settar EFF_LL3 30 EFF_LL4 -20 EFF_LL5 -10 end
+# 等待 0.1 秒
+wait 0.1 end
+ENDSTATE
+
+# 状态 17
+STARTSTATE
+# 重置左腿和右腿的状态
+reset LEG_LEFT LEG_RIGHT end
+# 等待 0.8 秒
+wait 0.8 end
+ENDSTATE
+
+# 结束技能定义
+ENDSKILL 
+
+# 反射技能：将左腿踢球技能反射为右腿踢球技能
+REFLECTSKILL SKILL_KICK_LEFT_LEG SKILL_KICK_RIGHT_LEG

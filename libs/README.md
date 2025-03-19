@@ -1,3 +1,1 @@
-# Libs
----
-Place shared objects that you want the agent to load at runtime in this directory which is added to `LD_LIBRARY_PATH` in start scripts.  Adding shared objects to this directory ensures that they will be found when copying to and running the binary on another computer such as for a competition.   Run [scripts/copy_libs.sh](../scripts/copy_libs.sh) to automatically copy all of the binary's linked shared objects to this directory.  Note that some libraries may not be compatible with later/future OS releases (e.g. the default version of libc on Ubuntu 14.04 is not compatible with Ubuntu 16.04). 
+将您希望在运行时加载的共享对象（shared objects）放置在此目录中，该目录已添加到启动脚本中的 LD_LIBRARY_PATH 中。将共享对象添加到此目录可确保在将二进制文件复制到另一台计算机（例如用于比赛）并运行时能够找到这些共享对象。运行 scripts/copy_libs.sh 脚本可以自动将二进制文件链接的所有共享对象复制到此目录中。请注意，某些库可能与后续/未来的操作系统版本不兼容（例如，Ubuntu 14.04 的默认 libc 版本与 Ubuntu 16.04 不兼容）

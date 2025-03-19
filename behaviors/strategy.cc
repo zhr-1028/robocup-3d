@@ -19,7 +19,7 @@ extern int agentBodyType;
 void NaoBehavior::beam(double& beamX, double& beamY, double& beamAngle) {
     int playerNum = worldModel->getUNum();
     double maxFrontX = -0.5; // 极限靠前位置（距离中线0.5米，确保不越位）
-    double midfieldX = -HALF_FIELD_X + 6.0; // 中场靠前
+    double midfieldX = -HALF_FIELD_X + 7.0; // 中场靠前，增加到距离底线7米，更靠前
     const double centerCircleRadius = 2.0; // RoboCup 3D 场地中心圆圈半径
 
     // 初始化随机数种子
@@ -42,9 +42,9 @@ void NaoBehavior::beam(double& beamX, double& beamY, double& beamAngle) {
     // 中场（球员4、5、6）：极简中场，全部压上
     else if (playerNum == 4 || playerNum == 5 || playerNum == 6) {
         beamX = midfieldX;
-        double baseY = (playerNum == 4) ? -4.0 : (playerNum == 5) ? 0.0 : 4.0;
+        double baseY = (playerNum == 4) ? -6.0 : (playerNum == 5) ? 0.0 : 6.0; // 扩大y轴分布
         // 增加随机偏移
-        double randomOffset = (static_cast<double>(std::rand()) / RAND_MAX) * 1.0; 
+        double randomOffset = (static_cast<double>(std::rand()) / RAND_MAX) * 2.0; 
         beamY = baseY + ((playerNum % 2 == 0) ? randomOffset : -randomOffset);
         beamAngle = (playerNum == 5) ? 0.0 : (playerNum == 4) ? 15.0 : -15.0; // 边中场斜向站位
     }
@@ -57,11 +57,11 @@ void NaoBehavior::beam(double& beamX, double& beamY, double& beamAngle) {
             beamAngle = 0.0;
         } else {
             // 其他前锋：非对称三角站位基础上增加随机偏移
-            double baseY = (playerNum == 7) ? -3.5 : 
-                           (playerNum == 8) ? -1.5 :
-                           (playerNum == 10) ? 1.5 : 
-                           3.5;
-            double randomOffset = (static_cast<double>(std::rand()) / RAND_MAX) * 1.5; 
+            double baseY = (playerNum == 7) ? -6.0 : 
+                           (playerNum == 8) ? -3.0 :
+                           (playerNum == 10) ? 3.0 : 
+                           6.0; // 扩大y轴分布
+            double randomOffset = (static_cast<double>(std::rand()) / RAND_MAX) * 3.0; 
             beamY = baseY + ((playerNum % 2 == 0) ? randomOffset : -randomOffset);
             beamX = maxFrontX + ((static_cast<double>(std::rand()) / RAND_MAX) * 0.5); // 让前锋在x轴上也有一定分散
             beamAngle = (playerNum % 2 == 0) ? 10.0 : -10.0; // 斜向对方球门

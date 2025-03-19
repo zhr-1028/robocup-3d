@@ -57,7 +57,7 @@ extern "C" void handler(int sig)
 // 打印欢迎信息
 void PrintGreeting()
 {
-    cout << "3D 仿真团队基础代码\n";
+    cout << "Robocup3D仿真代码\n";
 }
 
 // 打印帮助信息，展示程序的使用方法和可用选项
@@ -152,7 +152,7 @@ string rsg("rsg/agent/nao/nao.rsg");
 void ReadOptions(int argc, char* argv[])
 {
     // 默认团队名称
-    teamName = "UTAustinVilla_Base";
+    teamName = "Ahjzu-3d";
     // 球员编号，值为 0 表示选择下一个可用编号
     uNum = 0; 
 

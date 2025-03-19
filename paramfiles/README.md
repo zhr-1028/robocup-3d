@@ -1,8 +1,4 @@
-# Parameter Files
----
 
-Parameter files contain parameter values that the agent can load in at runtime.  Files should be formatted with a set of parameters as key value pairs from strings to floats.  The parameter name should be separated from its value with a tab (not a space) and parameters should be separated from each other with a single newline.  Parameter files support C++ style comments of `//` and `/* */` as well as `#`.
-
-Parameter files are specified and loaded with the ```--paramsfile <parameter_file>``` command line argument, and multiple parameter files can be loaded one after the other with newly loaded parameter values replacing the values of previously loaded parameters with the same name (key).  Parameters are loaded into an `std::map` called `namedParams`.
-
-All agents should first load the [defaultParams.txt](defaultParams.txt) parameter file, and then the appropriate *defaultParams_t&lt;type&gt;.txt* parameter file depending on an agent's body type, when starting and before loading any additional parameter files.
+参数文件包含代理在运行时可加载的参数值。文件格式应为字符串到浮点数的键值对集合。参数名与其值之间必须用制表符（而非空格）分隔，各参数之间用单个换行符分隔。参数文件支持 C++ 风格的注释（//和/* */）以及#注释。
+参数文件通过命令行参数--paramsfile <parameter_file>指定和加载。多个参数文件可按顺序加载，新加载的参数值会覆盖之前同名参数的值。所有参数将被加载到名为namedParams的std::map中。
+所有代理在启动时，必须首先加载defaultParams.txt参数文件，然后根据代理的身体类型加载对应的defaultParams_t<type>.txt参数文件，之后才能加载其他参数文件

@@ -209,14 +209,59 @@ protected:
     double getStdNameParameter(const SkillType kick_skill, const std::string& parameter); // 获取标准名称参数
     void getSkillsForKickType(int kickType, SkillType skillsForType[]); // 获取踢球类型对应的技能
 
+
+
+
+
+
+
+
+
+
+
+
+
     //#################################################################################################################
+    SkillType keeper();
+    SkillType turnToAngle(double targetAngle);
+    SkillType defenderBehavior();
+
+    VecPosition findBestPassTarget() ;
+
+    SkillType midfieldDecisionMaking(int playerNum);
+    bool checkBallControl() ;
+    bool shouldAttemptShot(int num);
+    SkillType executeStrategicPass(int num) ;
+    bool shouldPressOpponent(int num);
+
+
+    //中锋$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    SkillType strikerBehavior(int playerNum) ;
+    bool validatePassPath(const VecPosition& target) ;
+
+
+
+
+    //前锋******************************************************
+    SkillType test();
   
+   
 
    
    
    
-    SkillType demoKickingCircle();// 示例行为：球员形成旋转圆圈并踢球***********************************************************************************
+
+ 
    
+
+
+
+
+
+
+
+
+    
 
 
 

@@ -99,48 +99,399 @@ void NaoBehavior::beam(double& beamX, double& beamY, double& beamAngle) {
 
 
 SkillType NaoBehavior::selectSkill() {
-    int playerNum = worldModel->getUNum(); // 获取球员编号
-    VecPosition ballPos = worldModel->getBall(); // 获取球的位置
-    VecPosition myPos = worldModel->getMyPosition(); // 获取自身位置
+    int playerNum = worldModel->getUNum();
 
-    // 守门员行为
+    // 守门员（球员1）
     if (playerNum == 1) {
-        if (ballPos.getX() < -HALF_FIELD_X + 2.0) { // 球在禁区附近
-            return kickBall(KICK_FORWARD, VecPosition(HALF_FIELD_X, 0, 0)); // 尝试解围
-        } else {
-            return SKILL_STAND; // 守门员站立
-        }
+        return keeper();
     }
-    // 后卫行为
+    // 后卫（球员2、3）
     else if (playerNum == 2 || playerNum == 3) {
-        if (ballPos.getX() < -HALF_FIELD_X + 5.0) { // 球在后场
-            return goToTarget(ballPos); // 拦截球
-        } else {
-            return SKILL_STAND; // 防守站位
-        }
+        return defenderBehavior();
     }
-    // 中场行为
-    else if (playerNum == 4 || playerNum == 5 || playerNum == 6) {
-        if (ballPos.getX() < 0) { // 球在中场
-            return goToTarget(ballPos); // 支援进攻
-        } else {
-            return SKILL_STAND; // 防守站位
-        }
+    // 中场（球员4、5、6）
+    else if (playerNum >=4 && playerNum <=6) {  // 修正条件判断
+        return strikerBehavior(playerNum);       // 传递playerNum参数
     }
-    // 前锋行为
-    else if (playerNum >= 7 && playerNum <= 11) {
-        if (ballPos.getX() > 0) { // 球在前场
-            return kickBall(KICK_FORWARD, VecPosition(HALF_FIELD_X, 0, 0)); // 尝试射门
-        } else {
-            return goToTarget(ballPos); // 支援进攻
+    // 其他球员（前锋
+    else if (playerNum == 7) {
+    return test();
+    }
+    else if (playerNum == 8) {
+        return test();
+        }
+        else if (playerNum == 9) {
+            return test();
+            }
+            else if (playerNum == 10) {
+                return test();
+                }
+                else if (playerNum == 11) {
+                    return test();
+                    }
+    else {
+        return SKILL_STAND;
+    }
+}
+
+
+
+
+  
+
+
+    
+
+
+
+
+
+//守门员%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+SkillType NaoBehavior::keeper() {
+    VecPosition ball = worldModel->getBall();
+    VecPosition myPos = worldModel->getMyPosition();
+    double ballDist = myPos.getDistanceTo(ball);
+    double currentAngle = worldModel->getMyAngDeg(); // 当前身体朝向
+    
+    // 计算球相对于自身朝向的角度差（规范化到[-180,180]）
+    double angleToBall = (ball - myPos).getTheta();
+    double angleDiff = angleToBall - currentAngle;
+    while(angleDiff > 180) angleDiff -= 360;
+    while(angleDiff < -180) angleDiff += 360;
+
+    // 核心逻辑
+    if(ballDist < 0.7 && fabs(angleDiff) < 30) {
+        return kickBall(KICK_FORWARD, VecPosition(HALF_FIELD_X, 0));
+    } 
+    else if(ballDist < 2.0) {
+        if(fabs(angleDiff) > 20) {
+            // 方案一：使用goToTargetRelative
+            return goToTargetRelative(VecPosition(0,0), angleToBall);
+            
+           
+           
+        }
+        return goToTarget(ball);
+    }
+    else {
+        VecPosition homePos(-HALF_FIELD_X+0.5, 0);
+        return goToTarget(homePos);
+    }
+}
+
+
+
+
+
+
+
+
+//后卫**********************************************************************************************************
+SkillType NaoBehavior::defenderBehavior() {
+    const int playerNum = worldModel->getUNum();
+    VecPosition ball = worldModel->getBall();
+    VecPosition myPos = worldModel->getMyPosition();
+    const VecPosition homeGoal(-HALF_FIELD_X, 0);
+
+    // 防御参数配置
+    const double DANGER_ZONE_RADIUS = 3.5;
+    const double CLEAR_DISTANCE = 1.2;
+    const double BASE_DEFEND_X = -HALF_FIELD_X + 4.0;
+    const double SIDE_OFFSET = 3.0;
+
+    // 动态防御位置（自动左右分配）
+    VecPosition defendPos(
+        BASE_DEFEND_X + (ball.getX() - BASE_DEFEND_X) * 0.3,
+        (playerNum % 2 == 0) ? -SIDE_OFFSET : SIDE_OFFSET
+    );
+
+    // 态势感知
+    const bool ballInDanger = ball.getDistanceTo(homeGoal) < DANGER_ZONE_RADIUS;
+    const bool canClear = myPos.getDistanceTo(ball) < CLEAR_DISTANCE;
+
+    // 危险区域处理
+    if (ballInDanger) {
+        if (canClear) {
+            // 侧翼解围方向选择
+            VecPosition clearTarget = (defendPos.getY() < 0) 
+                ? VecPosition(HALF_FIELD_X, HALF_FIELD_Y/2)
+                : VecPosition(HALF_FIELD_X, -HALF_FIELD_Y/2);
+
+            // 角度校准
+            double targetAngle = (clearTarget - myPos).getTheta();
+            double currentAngle = worldModel->getMyAngDeg();
+            double angleDiff = VecPosition::normalizeAngle(targetAngle - currentAngle);
+
+            if (fabs(angleDiff) < 30.0) {
+                return kickBall(KICK_FORWARD, clearTarget);
+            }
+            return goToTargetRelative(VecPosition(), angleDiff);
+        }
+        
+        // 使用球位置预测（基础线性预测）
+        VecPosition ballPrediction = ball + (ball - myPos).normalize() * 0.7;
+        return goToTarget(ballPrediction);
+    }
+
+    // 中场协防模式
+    if (ball.getX() < -HALF_FIELD_X/3) {
+        // 动态防御位置生成
+        VecPosition defendDir = (ball - defendPos).normalize();
+        VecPosition targetPos = defendPos + defendDir * 1.5;
+        
+        // 添加编号扰动防止重叠
+        targetPos.setY(targetPos.getY() + (playerNum % 3 - 1) * 0.4);
+        
+        return goToTarget(targetPos);
+    }
+
+    // 组织进攻阶段
+    VecPosition bestPassTarget = homeGoal;  // 默认目标
+    double maxPassScore = -INFINITY;
+    
+    // 遍历有效队友（使用框架原生方法）
+    for (int i = WO_TEAMMATE1; i <= WO_TEAMMATE11; ++i) {
+        WorldObject* teammate = worldModel->getWorldObject(i);
+        if (!teammate || i == WO_TEAMMATE1 + playerNum - 1) continue;
+
+        // 使用框架原生位置有效性判断
+        if (teammate->validPosition && 
+            teammate->pos.getX() > -HALF_FIELD_X + 5.0) {
+            // 传球评分：位置优势 + 安全系数
+            double forwardScore = teammate->pos.getX() * 1.2;
+            double safetyScore = 1.0 / (teammate->pos.getDistanceTo(ball) + 0.1);
+            double totalScore = forwardScore + safetyScore;
+            
+            if (totalScore > maxPassScore) {
+                maxPassScore = totalScore;
+                bestPassTarget = teammate->pos;
+            }
         }
     }
 
-    // 默认行为
-    return SKILL_STAND;
+    // 执行传球
+    if (maxPassScore > 0) {
+        VecPosition leadPassTarget = bestPassTarget + 
+                                   (bestPassTarget - myPos).normalize() * 0.5;
+        
+        if (myPos.getDistanceTo(leadPassTarget) < 5.0) {
+            double passAngle = (leadPassTarget - myPos).getTheta();
+            double angleDiff = VecPosition::normalizeAngle(passAngle - worldModel->getMyAngDeg());
+            
+            if (fabs(angleDiff) < 25.0) {
+                return kickBall(KICK_IK, leadPassTarget);
+            }
+            return goToTargetRelative(VecPosition(), angleDiff);
+        }
+    }
+
+    // 默认回防行为
+    return goToTarget(defendPos);
 }
+
+
+
+
+
+
+
+
+
+
+
+//中锋#####################################################################################################3
+
+SkillType NaoBehavior::strikerBehavior(int playerNum) {
+    VecPosition ball = worldModel->getBall();
+    VecPosition myPos = worldModel->getMyPosition();
+    VecPosition oppGoal(HALF_FIELD_X, 0);
+    static const double SHOOT_DIST = 8.0;
+    static const double PRESS_DIST = 2.5;
+
+    // 位置有效性检查函数
+    auto isValidPosition = [](const VecPosition& pos) {
+        return (pos.getX() > -HALF_FIELD_X*1.1 && pos.getX() < HALF_FIELD_X*1.1 &&
+                pos.getY() > -HALF_FIELD_Y*1.1 && pos.getY() < HALF_FIELD_Y*1.1);
+    };
+
+    if (playerNum == 5) { // 核心中场
+        if (myPos.getDistanceTo(ball) < 1.2) {
+            VecPosition bestTarget = findBestPassTarget();
+            if (isValidPosition(bestTarget)) {
+                double passAngle = (bestTarget - myPos).getTheta();
+                double angleDiff = VecPosition::normalizeAngle(passAngle - worldModel->getMyAngDeg());
+                
+                if (fabs(angleDiff) < 25.0) {
+                    return kickBall(KICK_IK, bestTarget);
+                }
+                return goToTargetRelative(VecPosition(), angleDiff);
+            }
+
+            // 带球实现：推进时保持控球
+            if (myPos.getX() > -HALF_FIELD_X/2) {
+                VecPosition dribbleTarget = myPos + (oppGoal - myPos).normalize() * 1.0;
+                double kickPower = min(0.3, myPos.getDistanceTo(oppGoal)/10.0);
+                return kickBall(KICK_DRIBBLE, dribbleTarget, kickPower);
+            }
+        }
+
+        VecPosition midPos(-HALF_FIELD_X/3, 0);
+        return goToTarget(midPos);
+    } 
+    else { // 边中场（4/6号）
+        double sideSign = (playerNum == 4) ? -1.0 : 1.0;
+        VecPosition attackBase(-HALF_FIELD_X + 8.0, sideSign * 3.0);
+
+        // 防守回撤
+        if (ball.getX() < -HALF_FIELD_X/2) {
+            VecPosition defendPos(-HALF_FIELD_X + 5.0, sideSign * 4.0);
+            return goToTarget(defendPos);
+        }
+
+        // 进攻处理
+        if (myPos.getDistanceTo(ball) < PRESS_DIST) {
+            if (myPos.getX() > 0 && myPos.getDistanceTo(oppGoal) < SHOOT_DIST) {
+                return kickBall(KICK_FORWARD, oppGoal);
+            }
+            
+            // 带球推进
+            VecPosition advanceDir = (oppGoal - myPos).normalize();
+            VecPosition dribbleTarget = myPos + advanceDir * 1.5;
+            return kickBall(KICK_DRIBBLE, dribbleTarget, 0.4);
+        }
+
+        // 动态跑位：根据球的位置调整
+        VecPosition runPos = attackBase;
+        if (ball.getX() > -HALF_FIELD_X/3) {
+            runPos += VecPosition(2.0, sideSign * 1.5);
+        }
+        return goToTarget(runPos);
+    }
+}
+
+VecPosition NaoBehavior::findBestPassTarget() {
+    VecPosition bestTarget(999, 999); // 无效位置标记
+    double maxScore = -INFINITY;
     
- 
+    // 新增：获取当前球员位置
+    VecPosition myPos = worldModel->getMyPosition(); // <-- 修复未定义标识符问题
+    
+    for (int i = WO_TEAMMATE1; i <= WO_TEAMMATE11; ++i) {
+        WorldObject* teammate = worldModel->getWorldObject(i);
+        if (!teammate || teammate->pos == myPos)  // 使用本地myPos
+            continue;
+        
+        VecPosition tPos = teammate->pos;
+        double forwardScore = tPos.getX() * 1.5;
+        
+        // 修正后的角度评分计算
+        double angleToTeammate = (tPos - myPos).getTheta();
+        double currentAngle = worldModel->getMyAngDeg();
+        double angleDiff = fabs(VecPosition::normalizeAngle(angleToTeammate - currentAngle));
+        double angleScore = 1.0 / (angleDiff + 0.1); // 避免除以零
+        
+        double distScore = 1.0/(tPos.getDistanceTo(myPos) + 0.5);
+        
+        double total = forwardScore + angleScore*0.8 + distScore*0.5;
+        
+        if (total > maxScore && validatePassPath(tPos)) {
+            maxScore = total;
+            bestTarget = tPos;
+        }
+    }
+    return bestTarget;
+}
+
+bool NaoBehavior::validatePassPath(const VecPosition& target) {
+    VecPosition currentPos = worldModel->getMyPosition();
+    VecPosition dir = (target - currentPos).normalize();
+    
+    for (double t = 0.5; t <= 5.0; t += 0.8) {
+        VecPosition checkPos = currentPos + dir * t;
+        
+        // 边界检查（使用标准绝对值函数）
+        if (fabs(checkPos.getX()) > HALF_FIELD_X || 
+            fabs(checkPos.getY()) > HALF_FIELD_Y) {
+            return false;
+        }
+
+        // 对手检查
+        for (int i = WO_OPPONENT1; i <= WO_OPPONENT11; ++i) {
+            WorldObject* opp = worldModel->getWorldObject(i);
+            if (opp && opp->pos.getDistanceTo(checkPos) < 1.8) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+
+
+//前锋策略&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+SkillType NaoBehavior::test() {
+    // Parameters for circle
+    VecPosition center = VecPosition(HALF_FIELD_X/2.0+2, 0, 0);
+    double circleRadius = 5.0;
+    double rotateRate = 2.5;
+
+    // Find closest player to ball
+    int playerClosestToBall = -1;
+    double closestDistanceToBall = 10000;
+    for(int i = WO_TEAMMATE1; i < WO_TEAMMATE1+NUM_AGENTS; ++i) {
+        VecPosition temp;
+        int playerNum = i - WO_TEAMMATE1 + 1;
+        if (worldModel->getUNum() == playerNum) {
+            // This is us
+            temp = worldModel->getMyPosition();
+        } else {
+            WorldObject* teammate = worldModel->getWorldObject( i );
+            if (teammate->validPosition) {
+                temp = teammate->pos;
+            } else {
+                continue;
+            }
+        }
+        temp.setZ(0);
+
+        double distanceToBall = temp.getDistanceTo(ball);
+        if (distanceToBall < closestDistanceToBall) {
+            playerClosestToBall = playerNum;
+            closestDistanceToBall = distanceToBall;
+        }
+    }
+
+    if (playerClosestToBall == worldModel->getUNum()) {
+        // Have closest player kick the ball toward the center
+        return kickBall(KICK_FORWARD, VecPosition(15,0,0));
+    } else {
+        // Move to circle position around center and face the center
+        VecPosition localCenter = worldModel->g2l(center);
+        SIM::AngDeg localCenterAngle = atan2Deg(localCenter.getY(), localCenter.getX());
+
+        // Our desired target position on the circle
+        // Compute target based on uniform number, rotate rate, and time
+        VecPosition target = center + VecPosition(circleRadius,0,0).rotateAboutZ(360.0/(NUM_AGENTS-1)*(worldModel->getUNum()-(worldModel->getUNum() > playerClosestToBall ? 1 : 0)) + worldModel->getTime()*rotateRate);
+
+        // Adjust target to not be too close to teammates or the ball
+        target = collisionAvoidance(true /*teammate*/, false/*opponent*/, true/*ball*/, 1/*proximity thresh*/, .5/*collision thresh*/, target, true/*keepDistance*/);
+
+        if (me.getDistanceTo(target) < .25 && abs(localCenterAngle) <= 10) {
+            // Close enough to desired position and orientation so just stand
+            return SKILL_STAND;
+        } else if (me.getDistanceTo(target) < .5) {
+            // Close to desired position so start turning to face center
+            return goToTargetRelative(worldModel->g2l(target), localCenterAngle);
+        } else {
+            // Move toward target location
+            return goToTarget(target);
+        }
+    }
+}
+
+
 
 
 
